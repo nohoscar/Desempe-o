@@ -10,7 +10,7 @@ function cargarDatosDesdeGoogleSheet() {
       const rows = csv.split('\n').slice(1);
       datos = rows.map(row => {
         const [nombre, rate, fsaf, cantidad, horas,DPMO] = row.split(',');
-        return { nombre, rate, fsaf, cantidad, horas,DPMO };
+        return { nombre, rate, fsaf, cantidad, horas,DPMO,Semana,Fecha };
       });
       mostrarDatos();
     });
@@ -39,6 +39,8 @@ function mostrarDatos() {
       <td>${dato.cantidad}</td>
       <td>${dato.horas}</td>
       <td>${dato.DPMO}</td>
+      <td>${dato.Semana}</td>
+      <td>${dato.Fecha}</td>
     `;
     contenedorTabla.appendChild(fila);
 
@@ -51,6 +53,8 @@ function mostrarDatos() {
       <p>Cantidad: ${dato.cantidad}</p>
       <p>Horas: ${dato.horas}</p>
       <p>DPMO: ${dato.DPMO}</p>
+      <p>DPMO: ${dato.Semana}</p>
+      <p>DPMO: ${dato.Fecha}</p>
     `;
     contenedorCards.appendChild(card);
   });
@@ -71,5 +75,5 @@ function descargarExcel() {
   const ws = XLSX.utils.json_to_sheet(datos);
   const wb = XLSX.utils.book_new();
   XLSX.utils.book_append_sheet(wb, ws, "Habilidades");
-  XLSX.writeFile(wb, "Matriz_Habilidades_DMY4.xlsx");
+  XLSX.writeFile(wb, "Resumen_Rendimientos.xlsx");
 }

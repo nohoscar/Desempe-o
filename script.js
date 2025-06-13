@@ -9,7 +9,7 @@ function cargarDatosDesdeGoogleSheet() {
     .then(csv => {
       const rows = csv.split('\n').slice(1);
       datos = rows.map(row => {
-        const [nombre, rate, fsaf, cantidad, horas,DPMO] = row.split(',');
+        const [nombre, rate, fsaf, cantidad, horas,DPMO,Semana,Fecha] = row.split(',');
         return { nombre, rate, fsaf, cantidad, horas,DPMO,Semana,Fecha };
       });
       mostrarDatos();

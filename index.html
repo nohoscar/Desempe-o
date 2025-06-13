@@ -1,0 +1,89 @@
+
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Visualizacion de desempeño - DMY4</title>
+  <link rel="stylesheet" href="style.css">
+  <script src="https://cdn.jsdelivr.net/npm/xlsx@0.18.5/dist/xlsx.full.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+  <script src="https://www.gstatic.com/firebasejs/9.22.1/firebase-app-compat.js"></script>
+  <script src="https://www.gstatic.com/firebasejs/9.22.1/firebase-auth-compat.js"></script>
+</head>
+<body>
+  <div id="loader" class="loader-container">
+    <div class="spinner"></div>
+    <p>Cargando matriz de habilidades...</p>
+  </div>
+
+  <div class="container" style="display:none">
+    <div class="header">
+      <h1>Matriz de Habilidades - DMY4</h1>
+      <button onclick="logout()">Cerrar sesión</button>
+    </div>
+
+    <div class="controls">
+      <input type="text" id="filtroEmpleado" placeholder="Filtrar por nombre">
+      <select id="filtroHabilidad">
+        <option value="">Todas las habilidades</option>
+        <option value="Rate">Rate</option>
+        <option value="Fsaf">Fsaf</option>
+        <option value="Cantidad">Cantidad</option>
+        <option value="Horas">Horas</option>
+        <option value="DPMO">DPMO</option>
+      </select>
+      <button onclick="descargarExcel()">Descargar Excel</button>
+    </div>
+
+    <div id="vistaEscritorio">
+      <table>
+        <thead>
+          <tr>
+            <th>Nombre</th>
+            <th>Rate</th>
+            <th>Fsaf</th>
+            <th>Cantidad</th>
+            <th>Horas</th>
+            <th>DPMO</th>
+          </tr>
+        </thead>
+        <tbody id="skillTable"></tbody>
+      </table>
+    </div>
+
+    <div id="vistaMovil" style="display:none">
+      <div id="cardsContainer"></div>
+    </div>
+  </div>
+
+  <script>
+    const firebaseConfig = {
+    apiKey: "AIzaSyBBeAZPdc_ZVIU4DxrOvGTLS94fn2k93QY",
+    authDomain: "desempe-2d564.firebaseapp.com",
+    projectId: "desempe-2d564",
+    storageBucket: "desempe-2d564.firebasestorage.app",
+    messagingSenderId: "36163661484",
+    appId: "1:36163661484:web:8bf1c053f5368c5bfef909",
+    measurementId: "G-4JK2HNPGDY"
+    };
+    firebase.initializeApp(firebaseConfig);
+    firebase.auth().onAuthStateChanged(user => {
+      if (!user) {
+        window.location.href = "login.html";
+      } else {
+        document.querySelector('.container').style.display = 'block';
+        document.getElementById('loader').style.display = 'none';
+        cargarDatosDesdeGoogleSheet();
+      }
+    });
+
+    function logout() {
+      firebase.auth().signOut().then(() => {
+        window.location.href = "login.html";
+      });
+    }
+  </script>
+  <script src="script.js"></script>
+</body>
+</html>

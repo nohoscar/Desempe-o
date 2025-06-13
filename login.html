@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Iniciar sesión - DMY4</title>
+  <link rel="stylesheet" href="style.css" />
+</head>
+<body>
+  <div class="login-container">
+    <img src="https://upload.wikimedia.org/wikipedia/commons/a/a9/Amazon_logo.svg" alt="Amazon Logo" class="logo">
+    <h2>Inicia sesión</h2>
+    <form onsubmit="login(event)">
+      <input type="email" id="email" placeholder="Correo electrónico" required />
+      <input type="password" id="password" placeholder="Contraseña" required />
+      <button type="submit">Entrar</button>
+    </form>
+    <p id="mensajeLogin"></p>
+    <p class="link">¿No tienes cuenta? <a href="signup.html">Regístrate aquí</a></p>
+  </div>
+
+  <script src="https://www.gstatic.com/firebasejs/9.22.1/firebase-app-compat.js"></script>
+  <script src="https://www.gstatic.com/firebasejs/9.22.1/firebase-auth-compat.js"></script>
+  <script>
+    const firebaseConfig = {
+    apiKey: "AIzaSyBBeAZPdc_ZVIU4DxrOvGTLS94fn2k93QY",
+    authDomain: "desempe-2d564.firebaseapp.com",
+    projectId: "desempe-2d564",
+    storageBucket: "desempe-2d564.firebasestorage.app",
+    messagingSenderId: "36163661484",
+    appId: "1:36163661484:web:8bf1c053f5368c5bfef909",
+    measurementId: "G-4JK2HNPGDY"
+    };
+    firebase.initializeApp(firebaseConfig);
+
+    function login(e) {
+      e.preventDefault();
+      const email = document.getElementById("email").value;
+      const password = document.getElementById("password").value;
+      firebase.auth().signInWithEmailAndPassword(email, password)
+        .then(() => window.location.href = "index.html")
+        .catch(error => {
+          document.getElementById("mensajeLogin").innerText = error.message;
+        });
+    }
+  </script>
+</body>
+</html>

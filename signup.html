@@ -1,0 +1,58 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Registro - DMY4</title>
+  <link rel="stylesheet" href="style.css" />
+</head>
+<body>
+  <div class="signup-container">
+    <img src="https://upload.wikimedia.org/wikipedia/commons/a/a9/Amazon_logo.svg" alt="Amazon Logo" class="logo">
+    <h2>Crea tu cuenta</h2>
+    <form onsubmit="registrarUsuario(event)">
+      <input type="email" id="emailRegistro" placeholder="Correo electrónico" required />
+      <input type="password" id="claveRegistro" placeholder="Contraseña" required />
+      <input type="password" id="confirmarClave" placeholder="Confirmar contraseña" required />
+      <button type="submit">Registrarse</button>
+    </form>
+    <p id="mensajeRegistro"></p>
+    <p class="link">¿Ya tienes cuenta? <a href="login.html">Inicia sesión</a></p>
+  </div>
+
+  <script src="https://www.gstatic.com/firebasejs/9.22.1/firebase-app-compat.js"></script>
+  <script src="https://www.gstatic.com/firebasejs/9.22.1/firebase-auth-compat.js"></script>
+  <script>
+    const firebaseConfig = {
+    apiKey: "AIzaSyBBeAZPdc_ZVIU4DxrOvGTLS94fn2k93QY",
+    authDomain: "desempe-2d564.firebaseapp.com",
+    projectId: "desempe-2d564",
+    storageBucket: "desempe-2d564.firebasestorage.app",
+    messagingSenderId: "36163661484",
+    appId: "1:36163661484:web:8bf1c053f5368c5bfef909",
+    measurementId: "G-4JK2HNPGDY"
+    };
+    firebase.initializeApp(firebaseConfig);
+
+    function registrarUsuario(e) {
+      e.preventDefault();
+      const email = document.getElementById("emailRegistro").value;
+      const password = document.getElementById("claveRegistro").value;
+      const confirmar = document.getElementById("confirmarClave").value;
+
+      if (password !== confirmar) {
+        document.getElementById("mensajeRegistro").innerText = "Las contraseñas no coinciden.";
+        return;
+      }
+
+      firebase.auth().createUserWithEmailAndPassword(email, password)
+        .then(() => {
+          window.location.href = "index.html";
+        })
+        .catch(error => {
+          document.getElementById("mensajeRegistro").innerText = error.message;
+        });
+    }
+  </script>
+</body>
+</html>
